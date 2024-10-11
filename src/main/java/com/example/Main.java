@@ -23,7 +23,10 @@ public class Main {
 
         String stringaMaiuscola = stringaRicevuta.toUpperCase();
         out.writeBytes(stringaMaiuscola + '\n');
-        
+        System.out.println("string inviata");
+
+        s.close();
+        s1.close();
 
     }
 
