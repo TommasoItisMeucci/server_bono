@@ -10,23 +10,35 @@ import java.net.Socket;
 public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Server avviato!");
-        
+
         ServerSocket s1 = new ServerSocket(3000);
         Socket s = s1.accept();
         System.out.println("client collegato");
-        
+
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         DataOutputStream out = new DataOutputStream(s.getOutputStream());
+        String stringaRicevuta = new String();
+        
+        do {
 
-        String stringaRicevuta = in.readLine();
-        System.out.println("la stringa ricevuta è: " + stringaRicevuta);
+            stringaRicevuta = in.readLine();
+            System.out.println("la stringa ricevuta è: " + stringaRicevuta);
 
-        String stringaMaiuscola = stringaRicevuta.toUpperCase();
-        out.writeBytes(stringaMaiuscola + '\n');
-        System.out.println("string inviata");
+            if(stringaRicevuta .equals("!")){
+                break;
+            }
 
+            String stringaMaiuscola = stringaRicevuta.toUpperCase();
+            out.writeBytes(stringaMaiuscola + '\n');
+            System.out.println("string inviata");
+
+
+        } while(!(stringaRicevuta.equals("!")));
+                
         s.close();
         s1.close();
+
+        
 
     }
 
