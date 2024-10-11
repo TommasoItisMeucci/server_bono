@@ -10,8 +10,14 @@ import java.net.Socket;
 public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Server avviato!");
-
         ServerSocket s1 = new ServerSocket(3000);
+       /* do {
+            Socket s = s1.accept();
+            System.out.println("client collegato");
+            MioThread t = new MioThread(s);
+            t.start(); 
+        } while (true);*/
+
         Socket s = s1.accept();
         System.out.println("client collegato");
 
@@ -24,7 +30,8 @@ public class Main {
             stringaRicevuta = in.readLine();
             System.out.println("la stringa ricevuta è: " + stringaRicevuta);
 
-            if(stringaRicevuta .equals("!")){
+            if(stringaRicevuta .equals("exit")){
+                stringaRicevuta = "!";
                 break;
             }
 
@@ -33,7 +40,7 @@ public class Main {
             System.out.println("string inviata");
 
 
-        } while(!(stringaRicevuta.equals("!")));
+        } while(!(stringaRicevuta.equals("exit")));
                 
         s.close();
         s1.close();
