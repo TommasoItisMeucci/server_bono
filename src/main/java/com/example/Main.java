@@ -11,42 +11,71 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Server avviato!");
         ServerSocket s1 = new ServerSocket(3000);
-       /* do {
-            Socket s = s1.accept();
-            System.out.println("client collegato");
-            MioThread t = new MioThread(s);
-            t.start(); 
-        } while (true);*/
-
         Socket s = s1.accept();
         System.out.println("client collegato");
 
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         DataOutputStream out = new DataOutputStream(s.getOutputStream());
         String stringaRicevuta = new String();
+        String operazioneScelta = new String();
         
         do {
 
+            //ricevo la stringa
             stringaRicevuta = in.readLine();
-            System.out.println("la stringa ricevuta è: " + stringaRicevuta);
+            
 
+            //controllo di fine//
             if(stringaRicevuta .equals("exit")){
                 stringaRicevuta = "!";
+                System.out.println("server chiuso");
                 break;
             }
+            System.out.println("la stringa ricevuta è: " + stringaRicevuta);
 
-            String stringaMaiuscola = stringaRicevuta.toUpperCase();
-            out.writeBytes(stringaMaiuscola + '\n');
-            System.out.println("string inviata");
+            //ricevo operazione
+            operazioneScelta = in.readLine();
+            System.out.println("l'operazione scelta è: " + operazioneScelta);
+           
+            //controllo operazione
+            switch (operazioneScelta) {
+                case "M":
+                        String stringaMaiuscola = stringaRicevuta.toUpperCase();
+                        out.writeBytes(stringaMaiuscola + '\n');
+                        System.out.println("string inviata");
+                    break;
+                
+                case "m":
+                        String stringaMinuscola = stringaRicevuta.toLowerCase();
+                        out.writeBytes(stringaMinuscola + '\n');
+                        System.out.println("string inviata");
+                    break;
+
+                case "r":
+                        String stringaRibaltata = new StringBuilder(stringaRicevuta).reverse().toString();
+                        out.writeBytes(stringaRibaltata + '\n');
+                        System.out.println("string inviata");
+                    break;
+
+                case "c":
+                        int lettere = 0;
+                        lettere = stringaRicevuta.length();
+                        out.writeBytes(lettere + "\n");
+                        System.out.println("string inviata");
+                    break;
 
 
-        } while(!(stringaRicevuta.equals("exit")));
+                default:
+                        String errore = "!";
+                        out.writeBytes(errore + "\n");
+                        System.out.println("notifica di errore");
+                    break;
+            }
+
+
+        } while(true);
                 
         s.close();
-        s1.close();
-
-        
-
     }
 
 }
