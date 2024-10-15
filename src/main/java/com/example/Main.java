@@ -66,8 +66,8 @@ public class Main {
 
 
                 default:
-                        String errore = "!";
-                        out.writeBytes(errore + "\n");
+                        String error = "!";
+                        out.writeBytes(error + "\n");
                         System.out.println("notifica di errore");
                     break;
             }
